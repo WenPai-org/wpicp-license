@@ -38,12 +38,9 @@ function wpicp_license_menu() {
 }
 
 /** Load translation */
-$current_locale = get_locale();
-if (!empty($current_locale)) {
-    $mo_file = dirname(__FILE__) . '/languages/wpicp-license-' . $current_locale . ".mo";
-    if (@file_exists($mo_file) && is_readable($mo_file)) {
-        load_textdomain('wpicp-license', $mo_file);
-    }
+add_action( 'init', 'wpicp_load_textdomain' );
+function wpicp_load_textdomain() {
+	load_plugin_textdomain( 'wpicp-license', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
 }
 
 // Add settings page and field
