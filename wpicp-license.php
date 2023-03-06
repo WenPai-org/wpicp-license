@@ -7,7 +7,7 @@
  * Author URI: https://wpicp.com/
  * Text Domain: wpicp-license
  * Domain Path: /languages
- * Version: 1.0
+ * Version: 1.0.1
  * Network: True
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,7 +40,7 @@ function wpicp_license_menu() {
 /** Load translation */
 add_action( 'init', 'wpicp_load_textdomain' );
 function wpicp_load_textdomain() {
-	load_plugin_textdomain( 'wpicp-license', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+	load_plugin_textdomain( 'wpicp-license', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 // Add settings page and field

@@ -1,9 +1,10 @@
 === WPICP License ===
+Contributors: wpfanyi
 Tags: ICP, ICP License, ICP Beian,备案,备案号
 Requires at least: 5.4
 Tested up to: 6.1.1
 Requires PHP: 5.6
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,8 +49,8 @@ Starting with WP ICP License consists of just two steps: installing and setting 
 ###Install WP ICP License form within WordPress###
 
 1. Visit the plugins page within your dashboard and select ‘Add New’;
-2. Search for ‘WP ICP License’;
-3. Activate WWP ICP License from your Plugins page;
+2. Search for ‘WPICP License’;
+3. Activate WPICP License from your Plugins page;
 4. Go to ‘after activation’ below.
 
 
@@ -67,6 +68,11 @@ Starting with WP ICP License consists of just two steps: installing and setting 
 
 == Changelog ==
 
+
+### 1.0.1 ###
+
+* Fix glotpress language pack issue, thanks for reporting by Alex.
+* Delete preset language zh_CN/zh_TW.
 
 ### 1.0.0 ###
 
