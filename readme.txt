@@ -68,6 +68,15 @@ Starting with WP ICP License consists of just two steps: installing and setting 
 
 == Changelog ==
 
+### 1.1 ###
+
+* Add China Wangan License(PSB) 
+* Use ShortCode [wpicp_wangan]
+
+### 1.0.1 ###
+
+* Fix glotpress language pack issue, thanks for reporting by Alex.
+* Delete preset language zh_CN/zh_TW.
 
 ### 1.0.1 ###
 

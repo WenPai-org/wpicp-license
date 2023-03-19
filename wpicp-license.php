@@ -7,8 +7,12 @@
  * Author URI: https://wpicp.com/
  * Text Domain: wpicp-license
  * Domain Path: /languages
+<<<<<<< Updated upstream
  * Version: 1.0.1
  * Network: True
+=======
+ * Version: 1.1
+>>>>>>> Stashed changes
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -22,7 +26,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  */
-
 
 // Add admin menu page
 add_action( 'admin_menu', 'wpicp_license_menu' );
@@ -54,7 +57,12 @@ function wpicp_license_settings() {
         'wpicp_license_section_callback',
         'wpicp_license_settings'
     );
-
+    add_settings_section(
+        'wpicp_wangan_section',
+        __( 'China Wangan License Number', 'wpicp-license' ),
+        'wpicp_wangan_section_callback',
+        'wpicp_license_settings'
+    );
     add_settings_field(
         'wpicp_license_field',
         __( 'ICP License', 'wpicp-license' ),
@@ -63,8 +71,27 @@ function wpicp_license_settings() {
         'wpicp_license_section'
     );
 
+    add_settings_field(
+        'wpicp_wangan_field',
+        __( 'Wangan License', 'wpicp-license' ),
+        'wpicp_wangan_field_callback',
+        'wpicp_license_settings',
+        'wpicp_wangan_section'
+    );
+    add_settings_field(
+        'wpicp_province_field',
+        __( 'Province', 'wpicp-license' ),
+        'wpicp_license_settings',
+        'wpicp_wangan_section'
+    );
+
+    register_setting( 'wpicp_license_settings', 'wpicp_province' );
+    register_setting( 'wpicp_license_settings', 'wpicp_wangan' );
     register_setting( 'wpicp_license_settings', 'wpicp_license' );
 }
+
+
+
 
 // Settings section callback
 function wpicp_license_section_callback() {
@@ -76,11 +103,76 @@ function wpicp_license_section_callback() {
   echo '<p>' . __( '2. Use the shortcode <code>[wpicp_license]</code> to display the license information and link on your website. <a href="https://wpicp.com/document/integrate-into-theme" target="_blank" rel="noopener">(Integrate into theme?)</a>', 'wpicp-license' ) . '</p>';
 }
 
+
 // Settings field callback
 function wpicp_license_field_callback() {
     $wpicp_license = get_option( 'wpicp_license' );
     echo '<input type="text" id="wpicp_license" name="wpicp_license" value="' . esc_attr( $wpicp_license ) . '"/>';
     echo '<p class="description" style="font-size:13px;">' . __( 'Enter your ICP license number information. <a href="https://wpicp.com/document/correct-format" target="_blank" rel="noopener">(Correct format?)</a>', 'wpicp-license' ) . '</p>';
+}
+// Settings section callback
+function wpicp_wangan_section_callback() {
+  echo '<p>' . __( 'Use the shortcode <code>[wpicp_wangan]</code>, You need to register with the Public Security Bureau (PSB) to have this license.  <a href="https://wpicp.com/document/what-is-psb-filing" target="_blank" rel="noopener">(What is PSB filing?)</a>', 'wpicp-license' ) . '</p>';
+}
+
+// Add Wangan license field
+function wpicp_wangan_field_callback() {
+    $wpicp_wangan = get_option( 'wpicp_wangan' );
+    $wpicp_province = get_option( 'wpicp_province' );
+?>
+<input type="number" id="wpicp_wangan" name="wpicp_wangan" min="0" value="<?php echo esc_attr( $wpicp_wangan ); ?>"/>
+
+<select id="wpicp_province" name="wpicp_province">
+    <?php
+    // Array of province abbreviations
+    $provinces = array(
+    '京' => __('Beijing', 'wpicp-license'),
+    '津' => __('Tianjin', 'wpicp-license'),
+    '冀' => __('Hebei', 'wpicp-license'),
+    '晋' => __('Shanxi', 'wpicp-license'),
+    '蒙' => __('Inner Mongolia', 'wpicp-license'),
+    '辽' => __('Liaoning', 'wpicp-license'),
+    '吉' => __('Jilin', 'wpicp-license'),
+    '黑' => __('Heilongjiang', 'wpicp-license'),
+    '沪' => __('Shanghai', 'wpicp-license'),
+    '苏' => __('Jiangsu', 'wpicp-license'),
+    '浙' => __('Zhejiang', 'wpicp-license'),
+    '皖' => __('Anhui', 'wpicp-license'),
+    '闽' => __('Fujian', 'wpicp-license'),
+    '赣' => __('Jiangxi', 'wpicp-license'),
+    '鲁' => __('Shandong', 'wpicp-license'),
+    '豫' => __('Henan', 'wpicp-license'),
+    '鄂' => __('Hubei', 'wpicp-license'),
+    '湘' => __('Hunan', 'wpicp-license'),
+    '粤' => __('Guangdong', 'wpicp-license'),
+    '桂' => __('Guangxi', 'wpicp-license'),
+    '琼' => __('Hainan', 'wpicp-license'),
+    '渝' => __('Chongqing', 'wpicp-license'),
+    '川' => __('Sichuan', 'wpicp-license'),
+    '黔' => __('Guizhou', 'wpicp-license'),
+    '滇' => __('Yunnan', 'wpicp-license'),
+    '藏' => __('Tibet', 'wpicp-license'),
+    '陕' => __('Shaanxi', 'wpicp-license'),
+    '甘' => __('Gansu', 'wpicp-license'),
+    '青' => __('Qinghai', 'wpicp-license'),
+    '宁' => __('Ningxia', 'wpicp-license'),
+    '新' => __('Xinjiang', 'wpicp-license'),
+//    '港' => __('Hong Kong', 'wpicp-license'),
+//    '澳' => __('Macao', 'wpicp-license')
+//    '台' => __('Taiwan', 'wpicp-license')
+
+    // ... add more provinces here
+    );
+
+    // Loop through the array to generate the options
+    foreach ( $provinces as $abbr => $name ) {
+        echo '<option value="' . esc_attr( $abbr ) . '"' . selected( $wpicp_province, $abbr, false ) . '>' . esc_html( $name ) . '</option>';
+    }
+    ?>
+</select>
+<p class="description" style="font-size:13px;"><?php _e( 'Enter your Wangan license number and select the abbreviation of your province.', 'wpicp-license' ); ?></p>
+
+<?php
 }
 
 
@@ -99,7 +191,8 @@ function wpicp_license_settings_page() {
 }
 
 
-// Add shortcode
+
+// Add ICP shortcode
 add_shortcode( 'wpicp_license', 'wpicp_license_shortcode' );
 
 function wpicp_license_shortcode() {
@@ -113,5 +206,24 @@ function wpicp_license_shortcode() {
         return $license_link;
     }
 }
+
+
+// Add Wangan shortcode
+add_shortcode( 'wpicp_wangan', 'wpicp_wangan_shortcode' );
+
+function wpicp_wangan_shortcode() {
+    $wpicp_wangan = get_option( 'wpicp_wangan' );
+    $wpicp_province = get_option( 'wpicp_province' );
+
+    if ( $wpicp_wangan ) {
+         $wangan_text = '<img src="' . plugins_url( 'assets/images/gongan.png', __FILE__ ) . '" alt="Wangan License" style="vertical-align:middle;" />' . $wpicp_province . '公网安备' . $wpicp_wangan . '号' ;
+         $wangan_url = 'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' . urlencode($wpicp_wangan);
+         $target = '_blank';
+         $nofollow = 'nofollow';
+         $wangan_link = '<a href="' . esc_url( $wangan_url ) . '" target="' . esc_attr( $target ) . '" rel="' . esc_attr( $nofollow ) . '">' . $wangan_text . '</a>';
+        return $wangan_link;
+    }
+}
+
 
 ?>
