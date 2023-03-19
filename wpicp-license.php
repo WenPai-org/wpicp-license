@@ -7,12 +7,8 @@
  * Author URI: https://wpicp.com/
  * Text Domain: wpicp-license
  * Domain Path: /languages
-<<<<<<< Updated upstream
- * Version: 1.0.1
- * Network: True
-=======
  * Version: 1.1
->>>>>>> Stashed changes
+ * Network: True
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
