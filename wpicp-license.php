@@ -7,7 +7,7 @@
  * Author URI: https://wpicp.com/
  * Text Domain: wpicp-license
  * Domain Path: /languages
- * Version: 1.1
+ * Version: 1.2
  * Network: True
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,82 +23,102 @@
  * GNU General Public License for more details.
  */
 
-// Add admin menu page
-add_action( 'admin_menu', 'wpicp_license_menu' );
 
-function wpicp_license_menu() {
-    add_options_page(
-         __( 'WP ICP License Settings', 'wpicp-license' ),
+
+ require_once( plugin_dir_path( __FILE__ ) . 'includes/shortcode.php' );
+
+
+ // Add admin menu page
+ add_action( 'admin_menu', 'wpicp_license_menu' );
+
+ function wpicp_license_menu() {
+     add_options_page(
+          __( 'WP ICP License Settings', 'wpicp-license' ),
+          __( 'ICP License', 'wpicp-license' ),
+         'manage_options',
+         'wpicp_license_settings',
+         'wpicp_license_settings_page'
+     );
+ }
+
+ /** Load translation */
+ add_action( 'init', 'wpicp_load_textdomain' );
+ function wpicp_load_textdomain() {
+ 	load_plugin_textdomain( 'wpicp-license', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+ }
+
+ // Add settings page and field
+ add_action( 'admin_init', 'wpicp_license_settings' );
+
+ function wpicp_license_settings() {
+
+     add_settings_section(
+         'wpicp_license_section',
+         __( 'WordPress ICP License Namber', 'wpicp-license' ),
+         'wpicp_license_section_callback',
+         'wpicp_license_settings'
+     );
+     add_settings_section(
+         'wpicp_wangan_section',
+         __( 'China Wangan License Number', 'wpicp-license' ),
+         'wpicp_wangan_section_callback',
+         'wpicp_license_settings'
+     );
+     add_settings_field(
+         'wpicp_license_field',
          __( 'ICP License', 'wpicp-license' ),
-        'manage_options',
-        'wpicp_license_settings',
-        'wpicp_license_settings_page'
-    );
-}
+         'wpicp_license_field_callback',
+         'wpicp_license_settings',
+         'wpicp_license_section'
+     );
 
-/** Load translation */
-add_action( 'init', 'wpicp_load_textdomain' );
-function wpicp_load_textdomain() {
-	load_plugin_textdomain( 'wpicp-license', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
-
-// Add settings page and field
-add_action( 'admin_init', 'wpicp_license_settings' );
-
-function wpicp_license_settings() {
-
-    add_settings_section(
-        'wpicp_license_section',
-        __( 'WordPress ICP License Namber', 'wpicp-license' ),
-        'wpicp_license_section_callback',
-        'wpicp_license_settings'
-    );
-    add_settings_section(
-        'wpicp_wangan_section',
-        __( 'China Wangan License Number', 'wpicp-license' ),
-        'wpicp_wangan_section_callback',
-        'wpicp_license_settings'
-    );
-    add_settings_field(
-        'wpicp_license_field',
-        __( 'ICP License', 'wpicp-license' ),
-        'wpicp_license_field_callback',
-        'wpicp_license_settings',
-        'wpicp_license_section'
-    );
-
-    add_settings_field(
-        'wpicp_wangan_field',
-        __( 'Wangan License', 'wpicp-license' ),
-        'wpicp_wangan_field_callback',
-        'wpicp_license_settings',
-        'wpicp_wangan_section'
-    );
-    add_settings_field(
-        'wpicp_province_field',
-        __( 'Province', 'wpicp-license' ),
-        'wpicp_license_settings',
-        'wpicp_wangan_section'
-    );
-
-    register_setting( 'wpicp_license_settings', 'wpicp_province' );
-    register_setting( 'wpicp_license_settings', 'wpicp_wangan' );
-    register_setting( 'wpicp_license_settings', 'wpicp_license' );
-}
+     add_settings_field(
+         'wpicp_wangan_field',
+         __( 'Wangan License', 'wpicp-license' ),
+         'wpicp_wangan_field_callback',
+         'wpicp_license_settings',
+         'wpicp_wangan_section'
+     );
+     add_settings_field(
+         'wpicp_province_field',
+         __( 'Province', 'wpicp-license' ),
+         'wpicp_license_settings',
+         'wpicp_license_section'
+     );
 
 
+     register_setting( 'wpicp_license_settings', 'wpicp_province' );
+     register_setting( 'wpicp_license_settings', 'wpicp_wangan' );
+     register_setting( 'wpicp_license_settings', 'wpicp_license' );
+ }
 
 
-// Settings section callback
-function wpicp_license_section_callback() {
-  echo '<p>' . __( 'This plugin is free forever, and its purpose is to supplement the essential functions that the Chinese version of WordPress lacks. More information at <a href="https://wpicp.com" target="_blank" rel="noopener">WPICP.com</a>', 'wpicp-license' ) . '</p>';
-  echo '<h3>' . __( 'Why do you need?', 'wpicp-license' ) . '</h3>';
-  echo '<p>' . __( 'The ICP license is a state-issued registration, All public websites in mainland China must have an ICP number listed on the homepage of the website. <a href="https://wpicp.com/document/what-would-happen-if-not" target="_blank" rel="noopener">(What would happen if not?)</a>', 'wpicp-license' ) . '</p>';
-  echo '<h3>' . __( 'How to use?', 'wpicp-license' ) . '</h3>';
-  echo '<p>' . __( '1. Enter your ICP license information below. <a href="https://wpicp.com/document/find-my-license" target="_blank" rel="noopener">(Find My License?)</a>', 'wpicp-license' ) . '</p>';
-  echo '<p>' . __( '2. Use the shortcode <code>[wpicp_license]</code> to display the license information and link on your website. <a href="https://wpicp.com/document/integrate-into-theme" target="_blank" rel="noopener">(Integrate into theme?)</a>', 'wpicp-license' ) . '</p>';
-}
+ function show_wpicp_license_field(){
+     $wpicp_license = get_option('wpicp_license');
+     echo '<input type="text" id="wpicp_license" name="wpicp_license" value="'.esc_attr($wpicp_license).'">';
+     echo '<p class="description">'.__('Enter your ICP license number information.', 'wpicp-license').'</p>';
+ }
+ add_filter('admin_init', 'add_wpicp_license_setting');
+ function add_wpicp_license_setting(){
+     add_settings_field(
+         'wpicp_license_field',
+         __('ICP License', 'wpicp-license'),
+         'show_wpicp_license_field',
+         'general'
+     );
+     register_setting('general', 'wpicp_license');
+ }
 
+
+ // Settings section callback
+ function wpicp_license_section_callback() {
+     echo '<p>' . __( 'This plugin is free forever, and its purpose is to supplement the essential functions that the Chinese version of WordPress lacks. More information at <a href="https://wpicp.com" target="_blank" rel="noopener">WPICP.com</a>', 'wpicp-license' ) . '</p>';
+     echo '<h3>' . __( 'Why do you need?', 'wpicp-license' ) . '</h3>';
+     echo '<p>' . __( 'The ICP license is a state-issued registration, All public websites in mainland China must have an ICP number listed on the homepage of the website. <a href="https://wpicp.com/document/what-would-happen-if-not" target="_blank" rel="noopener">(What would happen if not?)</a>', 'wpicp-license' ) . '</p>';
+     echo '<h3>' . __( 'How to use?', 'wpicp-license' ) . '</h3>';
+     echo '<p>' . __( '1. Enter your ICP license information below. <a href="https://wpicp.com/document/find-my-license" target="_blank" rel="noopener">(Find My License?)</a>', 'wpicp-license' ) . '</p>';
+     echo '<p>' . __( '2. Use the shortcode <code>[wpicp_license]</code> to display the license information and link on your website. <a href="https://wpicp.com/document/integrate-into-theme" target="_blank" rel="noopener">(Integrate into theme?)</a>', 'wpicp-license' ) . '</p>';
+ }
 
 // Settings field callback
 function wpicp_license_field_callback() {
@@ -186,40 +206,6 @@ function wpicp_license_settings_page() {
     <?php
 }
 
-
-
-// Add ICP shortcode
-add_shortcode( 'wpicp_license', 'wpicp_license_shortcode' );
-
-function wpicp_license_shortcode() {
-    $wpicp_license = get_option( 'wpicp_license' );
-    if ( $wpicp_license ) {
-        $license_text = '' . $wpicp_license;
-        $license_url = 'https://beian.miit.gov.cn';
-        $target = '_blank';
-        $nofollow = 'nofollow';
-        $license_link = '<a href="' . esc_url( $license_url ) . '" target="' . esc_attr( $target ) . '" rel="' . esc_attr( $nofollow ) . '">' . $license_text . '</a>';
-        return $license_link;
-    }
-}
-
-
-// Add Wangan shortcode
-add_shortcode( 'wpicp_wangan', 'wpicp_wangan_shortcode' );
-
-function wpicp_wangan_shortcode() {
-    $wpicp_wangan = get_option( 'wpicp_wangan' );
-    $wpicp_province = get_option( 'wpicp_province' );
-
-    if ( $wpicp_wangan ) {
-         $wangan_text = '<img src="' . plugins_url( 'assets/images/gongan.png', __FILE__ ) . '" alt="Wangan License" style="vertical-align:middle;" />' . $wpicp_province . '公网安备' . $wpicp_wangan . '号' ;
-         $wangan_url = 'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' . urlencode($wpicp_wangan);
-         $target = '_blank';
-         $nofollow = 'nofollow';
-         $wangan_link = '<a href="' . esc_url( $wangan_url ) . '" target="' . esc_attr( $target ) . '" rel="' . esc_attr( $nofollow ) . '">' . $wangan_text . '</a>';
-        return $wangan_link;
-    }
-}
 
 
 ?>

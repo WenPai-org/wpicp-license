@@ -2,9 +2,9 @@
 Contributors: wpfanyi
 Tags: ICP, ICP License, ICP Beian,备案,备案号
 Requires at least: 5.4
-Tested up to: 6.1.1
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,15 @@ Starting with WP ICP License consists of just two steps: installing and setting 
 2. Translation Ready
 
 == Changelog ==
+
+
+### 1.2 ###
+
+* Add Chinese province shortcodes.
+* Use the shortcode [wpicp_province] to display the full province name.
+* Use the shortcode [wpicp_p] to display the short name of the province.
+* Added ICP license input box to settings page.
+
 
 ### 1.1 ###
 

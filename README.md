@@ -3,8 +3,8 @@
 
 ![avatar](https://ps.w.org/wpicp-license/assets/banner-1544x500.png)
 
- 描述 
-中国WordPress站点必备，展示您的 ICP 许可证。 
+ 描述
+中国WordPress站点必备，展示您的 ICP 许可证。
 
  ICP 许可证使用方法：
 
