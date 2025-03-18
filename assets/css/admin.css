@@ -1,0 +1,29 @@
+.wpicp-tabs .nav-tab {
+    cursor: pointer;
+}
+.wpicp-tabs .nav-tab-active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+}
+.wpicp_certificate_row {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.wpicp_badge_row {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.tab-content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.nav-tab-wrapper, .wrap h2.nav-tab-wrapper, h1.nav-tab-wrapper {
+    border-bottom: 0px solid #c3c4c7; 
+    padding-top: 0px; 
+}
+div#wpicp_preset_badges_container label {
+    padding: 5px 0;
+}
